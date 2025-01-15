@@ -5,7 +5,7 @@
   env.GREET = "devenv";
 
   # https://devenv.sh/packages/
-  packages = [ pkgs.git ];
+  packages = with pkgs; [ git ];
 
   # https://devenv.sh/languages/
   # languages.rust.enable = true;
@@ -40,6 +40,8 @@
 
   languages.rust = {
     enable = true;
+    channel = "stable";
+    #targets = [ "x86_64-pc-windows-gnu" ];
   };
   # https://devenv.sh/pre-commit-hooks/
   # pre-commit.hooks.shellcheck.enable = true;
