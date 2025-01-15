@@ -69,7 +69,7 @@ fn main() {
             return;
         }
         let (k_s, v_s) = vals.unwrap();
-        println!("'{}': '{}'", k_s, v_s);
+        println!("Stored: '{}': '{}'", k_s, v_s);
         if k_s.chars().count() != 1 {
             println!("Identifier must only be one character!");
             return;
@@ -80,7 +80,7 @@ fn main() {
         }
         vars.insert(k.unwrap(), v_s.parse::<f32>().unwrap());
     }
-    println!("Great! Now put your RPN expression below");
+    println!("Great! Now put your RPN expression below: ");
     let mut rpn_str = String::new();
     let _ = term.read_line(&mut rpn_str);
     let result = rpn::eval(rpn_str.trim().to_string(), vars);

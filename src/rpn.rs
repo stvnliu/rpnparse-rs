@@ -26,7 +26,7 @@ fn rpn_match_op(c: char) -> Option<RpnOperation> {
 pub fn eval(rpn_str: String, var_map: HashMap<char, f32>) -> Result<f32, ()> {
     let mut stack: Vec<f32> = vec![];
     for (_i, ch) in rpn_str.chars().enumerate() {
-        println!("Parsing: {}", ch);
+        println!("Parsing: {}, Stack: {:?}", ch, stack);
         let res = rpn_match_op(ch);
         if res.is_none() {
             let num = var_map.get(&ch);
@@ -36,8 +36,8 @@ pub fn eval(rpn_str: String, var_map: HashMap<char, f32>) -> Result<f32, ()> {
             stack.push(*num.unwrap());
             continue;
         }
-        let v1 = stack.pop();
         let v2 = stack.pop();
+        let v1 = stack.pop();
         if v1.is_none() || v2.is_none() {
             return Err(());
         }
