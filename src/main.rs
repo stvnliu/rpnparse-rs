@@ -1,4 +1,5 @@
 mod rpn;
+mod rpntree;
 use std::{collections::HashMap, io::stdin};
 /*struct TextSettings {}
 struct Component {
@@ -53,40 +54,51 @@ impl Display for Article {
         write!(f, "{}", builder)
     }
 }*/
-fn main() {
+fn main() -> Result<(), String> {
+    rpntree::test();
+    static RETURN_CHAR: &str = "*";
     let mut vars: HashMap<char, f32> = HashMap::new();
     println!("Input your variable mappings below, in K:char,V:f32 format, * to break;");
     let term = stdin();
     loop {
         let mut s = String::new();
         let _ = term.read_line(&mut s);
-        if s.trim() == "*" {
+        if s.trim() == RETURN_CHAR {
             break;
         }
         let vals = s.trim().split_once(',');
         if vals.is_none() {
             println!("Format invalid!");
-            return;
+            return Err("Format invalid".to_string());
         }
         let (k_s, v_s) = vals.unwrap();
         println!("Stored: '{}': '{}'", k_s, v_s);
         if k_s.chars().count() != 1 {
             println!("Identifier must only be one character!");
-            return;
+            return Err("Identified length exceeded".to_string());
         }
         let k = k_s.chars().next();
         if k.is_none() {
-            return;
+            return Err("No identifier name found.".to_string());
         }
-        vars.insert(k.unwrap(), v_s.parse::<f32>().unwrap());
+        let v = v_s.parse::<f32>();
+        match v {
+            Ok(val) => vars.insert(k.unwrap(), val),
+            Err(e) => return Err(e.to_string()),
+        };
     }
     println!("Great! Now put your RPN expression below: ");
     let mut rpn_str = String::new();
     let _ = term.read_line(&mut rpn_str);
     let result = rpn::eval(rpn_str.trim().to_string(), vars);
     match result {
-        Ok(number) => println!("Result: {}", number),
-        Err(_) => println!("Error occurred"),
+        Ok(number) => {
+            println!("Result: {}", number);
+            return Ok(());
+        }
+        Err(reason) => {
+            return Err(format!("In RPN evaluation: {}", reason));
+        }
     }
 }
 /*fn _main() -> Result<(), Box<dyn Error>> {
