@@ -23,15 +23,15 @@ fn rpn_match_op(c: char) -> Option<RpnOperation> {
         _ => None,
     }
 }
-pub fn eval(rpn_str: String, var_map: HashMap<char, f32>) -> Result<f32, ()> {
+pub fn eval(rpn_str: String, var_map: HashMap<char, f32>) -> Result<f32, String> {
     let mut stack: Vec<f32> = vec![];
     for (_i, ch) in rpn_str.chars().enumerate() {
-        println!("Parsing: {}, Stack: {:?}", ch, stack);
+        // println!("Parsing: {}, Stack: {:?}", ch, stack);
         let res = rpn_match_op(ch);
         if res.is_none() {
             let num = var_map.get(&ch);
             if num.is_none() {
-                return Err(());
+                return Err(format!("Nonexistent variable: {}", ch));
             }
             stack.push(*num.unwrap());
             continue;
@@ -39,14 +39,14 @@ pub fn eval(rpn_str: String, var_map: HashMap<char, f32>) -> Result<f32, ()> {
         let v2 = stack.pop();
         let v1 = stack.pop();
         if v1.is_none() || v2.is_none() {
-            return Err(());
+            return Err("Stack has less elements than expected.".to_string());
         }
         let num = apply_op(res.unwrap(), v1.unwrap(), v2.unwrap());
-        println!("Result tmp: {}", num);
+        // println!("Result tmp: {}", num);
         stack.push(num)
     }
     if stack.len() != 1 {
-        return Err(());
+        return Err("Unexpected stack length.".to_string());
     }
     Ok(stack
         .pop()
