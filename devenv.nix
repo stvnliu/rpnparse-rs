@@ -5,7 +5,7 @@
   env.GREET = "devenv";
 
   # https://devenv.sh/packages/
-  packages = with pkgs; [ git ];
+  packages = [ pkgs.git ];
 
   # https://devenv.sh/languages/
   # languages.rust.enable = true;
@@ -17,9 +17,6 @@
   # services.postgres.enable = true;
 
   # https://devenv.sh/scripts/
-  scripts.hello.exec = ''
-    echo hello from $GREET
-  '';
 
   enterShell = ''
     hello
@@ -31,18 +28,13 @@
   #   "myproj:setup".exec = "mytool build";
   #   "devenv:enterShell".after = [ "myproj:setup" ];
   # };
-
+  languages.rust.enable = true;
   # https://devenv.sh/tests/
   enterTest = ''
     echo "Running tests"
     git --version | grep --color=auto "${pkgs.git.version}"
   '';
 
-  languages.rust = {
-    enable = true;
-    channel = "stable";
-    #targets = [ "x86_64-pc-windows-gnu" ];
-  };
   # https://devenv.sh/pre-commit-hooks/
   # pre-commit.hooks.shellcheck.enable = true;
 
