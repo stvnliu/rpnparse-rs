@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+/// Available RPN operations
 pub enum RpnOperation {
     Add,
     Subtract,
@@ -23,6 +24,11 @@ fn rpn_match_op(c: char) -> Option<RpnOperation> {
         _ => None,
     }
 }
+
+/// Evaluates an expression in Reverse Polish Notation
+///
+/// Returns `f32` arithmetic result if the expression can be parsed
+/// Returns `Err` with a message if the RPN expression is malformed
 pub fn eval(rpn_str: String, var_map: HashMap<char, f32>) -> Result<f32, String> {
     let mut stack: Vec<f32> = vec![];
     for (_i, ch) in rpn_str.chars().enumerate() {

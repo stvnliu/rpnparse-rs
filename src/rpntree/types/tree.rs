@@ -1,4 +1,5 @@
 use std::fmt::Display;
+/// A binary tree structure used to parse and evaluate an expression into RPN.
 pub struct Tree<T: Copy> {
     pub root_node: TreeNode<T>,
 }

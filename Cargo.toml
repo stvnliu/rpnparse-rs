@@ -1,6 +1,10 @@
 [package]
-name = "rust-test"
-version = "0.1.0"
+name = "rpn"
+version = "0.0.1"
 edition = "2021"
-
+author = ["Zhongheng Liu <z.liu@outlook.com.gr>"]
+description = "Reverse Polish Notation parsing support"
+[lib]
+name = "rpn"
+path = "src/lib.rs"
 [dependencies]
