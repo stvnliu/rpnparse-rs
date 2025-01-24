@@ -31,7 +31,7 @@ fn rpn_match_op(c: char) -> Option<RpnOperation> {
 /// Returns `Err` with a message if the RPN expression is malformed
 pub fn eval(rpn_str: &str, var_map: HashMap<char, f32>) -> Result<f32, String> {
     let mut stack: Vec<f32> = vec![];
-    for (_i, ch) in rpn_str.chars().enumerate() {
+    for ch in rpn_str.chars() {
         // println!("Parsing: {}, Stack: {:?}", ch, stack);
         let res = rpn_match_op(ch);
         if res.is_none() {
