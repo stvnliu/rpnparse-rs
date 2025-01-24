@@ -1,6 +1,6 @@
 use std::collections::HashMap;
-mod types;
-use types::tree::Tree;
+
+use tree::Tree;
 
 fn reducer_string(opt_left: Option<String>, center: char, opt_right: Option<String>) -> String {
     format!(
@@ -21,7 +21,7 @@ pub fn test() {
     let result = tree.reduce::<String>(reducer_string);
     println!("{}", result);
 }
-pub fn eval_rpn(rpnstr: String) -> Result<String, String> {
+pub fn eval_infix(infixstr: &str) -> Result<String, String> {
     let mut priority_map = HashMap::<char, usize>::new();
     priority_map.insert('+', 100);
     priority_map.insert('-', 100);
@@ -29,7 +29,7 @@ pub fn eval_rpn(rpnstr: String) -> Result<String, String> {
     priority_map.insert('/', 200);
     println!("Priority map: {:?}", priority_map);
     let waiting_stack: Vec<char> = vec![];
-    for c in rpnstr.chars() {
+    for c in infixstr.chars() {
         if priority_map.contains_key(&c) {
             let priority = match priority_map.get(&c) {
                 Some(c_ptr) => c_ptr.to_owned(),

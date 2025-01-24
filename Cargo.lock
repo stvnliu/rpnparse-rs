@@ -4,4 +4,13 @@ version = 3
 
 [[package]]
 name = "rpn"
+version = "0.0.2"
+dependencies = [
+ "tree",
+]
+
+[[package]]
+name = "tree"
 version = "0.0.1"
+source = "sparse+http://kellnr.homelab.local/api/v1/crates/"
+checksum = "7154e93293f847b9951c2f864b48772c68800f4ff02c92084b589fefbfb6e6dc"

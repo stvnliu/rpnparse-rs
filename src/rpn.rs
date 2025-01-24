@@ -29,7 +29,7 @@ fn rpn_match_op(c: char) -> Option<RpnOperation> {
 ///
 /// Returns `f32` arithmetic result if the expression can be parsed
 /// Returns `Err` with a message if the RPN expression is malformed
-pub fn eval(rpn_str: String, var_map: HashMap<char, f32>) -> Result<f32, String> {
+pub fn eval(rpn_str: &str, var_map: HashMap<char, f32>) -> Result<f32, String> {
     let mut stack: Vec<f32> = vec![];
     for (_i, ch) in rpn_str.chars().enumerate() {
         // println!("Parsing: {}, Stack: {:?}", ch, stack);

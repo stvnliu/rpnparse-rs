@@ -1,6 +1,6 @@
 [package]
 name = "rpn"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2021"
 author = ["Zhongheng Liu <z.liu@outlook.com.gr>"]
 description = "Reverse Polish Notation parsing support"
@@ -8,3 +8,4 @@ description = "Reverse Polish Notation parsing support"
 name = "rpn"
 path = "src/lib.rs"
 [dependencies]
+tree = { version = "0.0.1", registry = "kellnr" }
